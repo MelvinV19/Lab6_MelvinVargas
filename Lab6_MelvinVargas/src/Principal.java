@@ -1,8 +1,16 @@
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         jMenuItem2.setEnabled(false);
         jMenuItem3.setEnabled(false);
+        jMenuItem4.setEnabled(false);
         jMenu2.setEnabled(false);
     }
 
@@ -51,13 +60,16 @@ public class Principal extends javax.swing.JFrame {
         jl_seres = new javax.swing.JList<>();
         jb_modificar = new javax.swing.JButton();
         jb_eliminar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         jd_seres.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -101,10 +113,14 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/universo7.png"))); // NOI18N
         jd_seres.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        jd_ver.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jl_seres.setModel(new DefaultListModel()
 
         );
         jScrollPane1.setViewportView(jl_seres);
+
+        jd_ver.getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 310, 420));
 
         jb_modificar.setText("Modificar");
         jb_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,6 +128,7 @@ public class Principal extends javax.swing.JFrame {
                 jb_modificarMouseClicked(evt);
             }
         });
+        jd_ver.getContentPane().add(jb_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 170, 70));
 
         jb_eliminar.setText("Eliminar");
         jb_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -119,30 +136,10 @@ public class Principal extends javax.swing.JFrame {
                 jb_eliminarMouseClicked(evt);
             }
         });
+        jd_ver.getContentPane().add(jb_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 160, 70));
 
-        javax.swing.GroupLayout jd_verLayout = new javax.swing.GroupLayout(jd_ver.getContentPane());
-        jd_ver.getContentPane().setLayout(jd_verLayout);
-        jd_verLayout.setHorizontalGroup(
-            jd_verLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_verLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jd_verLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(220, 220, 220)
-                .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jd_verLayout.setVerticalGroup(
-            jd_verLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_verLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102)
-                .addGroup(jd_verLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/maxresdefault.jpg"))); // NOI18N
+        jd_ver.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 660));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,6 +176,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
+        jMenuItem4.setText("Salir del Universo");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Guardar");
@@ -187,6 +192,15 @@ public class Principal extends javax.swing.JFrame {
                 jMenu2ActionPerformed(evt);
             }
         });
+
+        jMenuItem5.setText("Guardar en archivo de texto");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -195,7 +209,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1189, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,28 +221,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         String nombre = JOptionPane.showInputDialog("Ingrese nombre del universo");
-        Universo u = new Universo(nombre);
-        seleccionado = u;
+        seleccionado = new Universo(nombre);
+      
         JOptionPane.showMessageDialog(this, "Se creo el universo correctamente");
         JOptionPane.showMessageDialog(this, "Usted esta trabajando con el universo " + seleccionado.getNombre());
         jMenuItem2.setEnabled(true);
         jMenuItem1.setEnabled(false);
+        jMenuItem4.setEnabled(true);
         jMenu2.setEnabled(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        JFileChooser filechooser = new JFileChooser();
-        int seleccion = filechooser.showSaveDialog(this);
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File dir = filechooser.getSelectedFile();
-            boolean fuecreado = dir.mkdir();
-            if (fuecreado) {
-                JOptionPane.showMessageDialog(this, "Universo creado exitosamente");
-
-            } else {
-                JOptionPane.showMessageDialog(this, "El universo no fue creado exitosamente");
-            }
-        }
+       
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -305,6 +309,29 @@ public class Principal extends javax.swing.JFrame {
         modelo.addElement(seleccionado.getSeres());
     }//GEN-LAST:event_jb_eliminarMouseClicked
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        jMenuItem2.setEnabled(false);
+        jMenuItem3.setEnabled(false);
+        jMenu2.setEnabled(false);
+        jMenuItem4.setEnabled(false);
+        jMenuItem1.setEnabled(true);
+        JOptionPane.showMessageDialog(this, "Ha salido del universo correctamente");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+      JFileChooser jfc= new JFileChooser();
+      int op=jfc.showSaveDialog(this);
+      jfc.setName(seleccionado.getNombre()+"txt");
+      if(op==JFileChooser.APPROVE_OPTION){
+          seleccionado.setArchivo(jfc.getSelectedFile());
+          try {
+              seleccionado.escribirArchivo();
+          } catch (IOException ex) {
+              Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+          }
+      }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -349,12 +376,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_eliminar;
     private javax.swing.JButton jb_modificar;
