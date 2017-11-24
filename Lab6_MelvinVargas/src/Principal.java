@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author User
@@ -23,6 +22,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         jMenuItem2.setEnabled(false);
         jMenuItem3.setEnabled(false);
+        jMenu2.setEnabled(false);
     }
 
     /**
@@ -49,6 +49,8 @@ public class Principal extends javax.swing.JFrame {
         jd_ver = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         jl_seres = new javax.swing.JList<>();
+        jb_modificar = new javax.swing.JButton();
+        jb_eliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -104,21 +106,42 @@ public class Principal extends javax.swing.JFrame {
         );
         jScrollPane1.setViewportView(jl_seres);
 
+        jb_modificar.setText("Modificar");
+        jb_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_modificarMouseClicked(evt);
+            }
+        });
+
+        jb_eliminar.setText("Eliminar");
+        jb_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_eliminarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_verLayout = new javax.swing.GroupLayout(jd_ver.getContentPane());
         jd_ver.getContentPane().setLayout(jd_verLayout);
         jd_verLayout.setHorizontalGroup(
             jd_verLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_verLayout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addGap(160, 160, 160)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jd_verLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(220, 220, 220)
+                .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jd_verLayout.setVerticalGroup(
             jd_verLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_verLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
+                .addGap(60, 60, 60)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addGap(102, 102, 102)
+                .addGroup(jd_verLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -183,26 +206,27 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       String nombre= JOptionPane.showInputDialog("Ingrese nombre del universo");
-       Universo u=new Universo(nombre);
-       seleccionado=u;
-       JOptionPane.showMessageDialog(this,"Se creo el universo correctamente");
-       JOptionPane.showMessageDialog(this,"Usted esta trabajando con el universo "+seleccionado.getNombre());
-       jMenuItem2.setEnabled(true);
-       jMenuItem1.setEnabled(false);
+        String nombre = JOptionPane.showInputDialog("Ingrese nombre del universo");
+        Universo u = new Universo(nombre);
+        seleccionado = u;
+        JOptionPane.showMessageDialog(this, "Se creo el universo correctamente");
+        JOptionPane.showMessageDialog(this, "Usted esta trabajando con el universo " + seleccionado.getNombre());
+        jMenuItem2.setEnabled(true);
+        jMenuItem1.setEnabled(false);
+        jMenu2.setEnabled(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        JFileChooser filechooser=new JFileChooser();
-        int seleccion =filechooser.showSaveDialog(this);
-        if(seleccion==JFileChooser.APPROVE_OPTION){
-            File dir=filechooser.getSelectedFile();
-            boolean fuecreado=dir.mkdir();
-            if(fuecreado){
-                JOptionPane.showMessageDialog(this,"Universo creado exitosamente");
-                
-            }else{
-                JOptionPane.showMessageDialog(this,"El universo no fue creado exitosamente");
+        JFileChooser filechooser = new JFileChooser();
+        int seleccion = filechooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File dir = filechooser.getSelectedFile();
+            boolean fuecreado = dir.mkdir();
+            if (fuecreado) {
+                JOptionPane.showMessageDialog(this, "Universo creado exitosamente");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "El universo no fue creado exitosamente");
             }
         }
     }//GEN-LAST:event_jMenu2ActionPerformed
@@ -215,8 +239,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        seleccionado.getSeres().add(new Ser(tf_raza.getText(),(Integer)sp_ki.getValue(),(Integer)sp_edad.getValue(),tf_planeta.getText()));
+        seleccionado.getSeres().add(new Ser(tf_raza.getText(), (Integer) sp_ki.getValue(), (Integer) sp_edad.getValue(), tf_planeta.getText()));
         DefaultListModel modelo = (DefaultListModel) jl_seres.getModel();
+        modelo.removeAllElements();
         modelo.addElement(seleccionado.getSeres());
         tf_raza.setText("");
         sp_ki.setValue(0);
@@ -224,20 +249,61 @@ public class Principal extends javax.swing.JFrame {
         tf_planeta.setText("");
         jMenuItem3.setEnabled(true);
         System.out.println(seleccionado.getSeres());
-        
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       jd_ver.pack();
-       jd_ver.setModal(true);
-       jd_ver.setLocationRelativeTo(this);
-       jd_ver.setVisible(true);
-      
+        jd_ver.pack();
+        jd_ver.setModal(true);
+        jd_ver.setLocationRelativeTo(this);
+        jd_ver.setVisible(true);
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        
+
     }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jb_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_modificarMouseClicked
+        int pos = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la posicion del ser que desea modificar"));
+        int op = Integer.parseInt(JOptionPane.showInputDialog(this, "1. modificar raza\n" + "2.modificar edad maxima\n" + "3.modificar ki\n" + "4.modificar planeta\n" + "Ingrese numero de opcion que desea modificar"));
+        if (op == 1) {
+            String n_raza = JOptionPane.showInputDialog("Ingrese nueva Raza");
+            seleccionado.getSeres().get(pos).setRaza(n_raza);
+            DefaultListModel modelo = (DefaultListModel) jl_seres.getModel();
+            modelo.removeAllElements();
+            modelo.addElement(seleccionado.getSeres());
+        }
+        if (op == 2) {
+            int n_edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese nueva edad maxima"));
+            seleccionado.getSeres().get(pos).setAnios(n_edad);
+            DefaultListModel modelo = (DefaultListModel) jl_seres.getModel();
+            modelo.removeAllElements();
+            modelo.addElement(seleccionado.getSeres());
+        }
+        if (op == 3) {
+            int n_ki = Integer.parseInt(JOptionPane.showInputDialog("Ingrese nuevo KI"));
+            seleccionado.getSeres().get(pos).setKi(n_ki);
+            DefaultListModel modelo = (DefaultListModel) jl_seres.getModel();
+            modelo.removeAllElements();
+            modelo.addElement(seleccionado.getSeres());
+        }
+        if (op == 4) {
+            String n_planeta = JOptionPane.showInputDialog("Ingrese nuevo planeta");
+            seleccionado.getSeres().get(pos).setRaza(n_planeta);
+            DefaultListModel modelo = (DefaultListModel) jl_seres.getModel();
+            modelo.removeAllElements();
+            modelo.addElement(seleccionado.getSeres());
+        }
+    }//GEN-LAST:event_jb_modificarMouseClicked
+
+    private void jb_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_eliminarMouseClicked
+        int pos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la posicion del ser que desea elminar"));
+        seleccionado.getSeres().remove(pos);
+        DefaultListModel modelo = (DefaultListModel) jl_seres.getModel();
+        modelo.removeAllElements();
+        modelo.addElement(seleccionado.getSeres());
+    }//GEN-LAST:event_jb_eliminarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -290,13 +356,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jb_eliminar;
+    private javax.swing.JButton jb_modificar;
     private javax.swing.JDialog jd_seres;
     private javax.swing.JDialog jd_ver;
-    private javax.swing.JList<Ser> jl_seres;
+    private javax.swing.JList<String> jl_seres;
     private javax.swing.JSpinner sp_edad;
     private javax.swing.JSpinner sp_ki;
     private javax.swing.JTextField tf_planeta;
     private javax.swing.JTextField tf_raza;
     // End of variables declaration//GEN-END:variables
-Universo seleccionado=null;
+Universo seleccionado = null;
 }

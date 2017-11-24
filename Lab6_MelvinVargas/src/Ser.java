@@ -47,7 +47,7 @@ public class Ser {
 
     @Override
     public String toString() {
-        return Raza + ", ki=" + ki + ", anios=" + anios + ", planeta=" + planeta + '}';
+        return Raza+" - "+" KI "+ki+"\n"; 
     }
     
 }
