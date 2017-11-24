@@ -2,6 +2,7 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2.setEnabled(false);
         jMenuItem3.setEnabled(false);
         jMenuItem4.setEnabled(false);
+        jMenuItem7.setEnabled(false);
         jMenu2.setEnabled(false);
     }
 
@@ -61,12 +63,17 @@ public class Principal extends javax.swing.JFrame {
         jb_modificar = new javax.swing.JButton();
         jb_eliminar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        abrirarchivo = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ta_archivo = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -141,6 +148,27 @@ public class Principal extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/maxresdefault.jpg"))); // NOI18N
         jd_ver.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 660));
 
+        ta_archivo.setColumns(20);
+        ta_archivo.setRows(5);
+        jScrollPane2.setViewportView(ta_archivo);
+
+        javax.swing.GroupLayout abrirarchivoLayout = new javax.swing.GroupLayout(abrirarchivo.getContentPane());
+        abrirarchivo.getContentPane().setLayout(abrirarchivoLayout);
+        abrirarchivoLayout.setHorizontalGroup(
+            abrirarchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abrirarchivoLayout.createSequentialGroup()
+                .addContainerGap(151, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144))
+        );
+        abrirarchivoLayout.setVerticalGroup(
+            abrirarchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(abrirarchivoLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\zeno-sama.jpg")); // NOI18N
@@ -168,13 +196,29 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setText("Listar seres");
+        jMenuItem3.setText("Listar seres en JList");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem6.setText("Cargar Universo");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
+
+        jMenuItem7.setText("Ver Universo txt");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
 
         jMenuItem4.setText("Salir del Universo");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +257,9 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -222,17 +268,18 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         String nombre = JOptionPane.showInputDialog("Ingrese nombre del universo");
         seleccionado = new Universo(nombre);
-      
+
         JOptionPane.showMessageDialog(this, "Se creo el universo correctamente");
         JOptionPane.showMessageDialog(this, "Usted esta trabajando con el universo " + seleccionado.getNombre());
         jMenuItem2.setEnabled(true);
         jMenuItem1.setEnabled(false);
         jMenuItem4.setEnabled(true);
+        jMenuItem7.setEnabled(false);
         jMenu2.setEnabled(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-       
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -315,22 +362,68 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setEnabled(false);
         jMenuItem4.setEnabled(false);
         jMenuItem1.setEnabled(true);
+        jMenuItem6.setEnabled(true);
+        jMenuItem7.setEnabled(false);
+       
         JOptionPane.showMessageDialog(this, "Ha salido del universo correctamente");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-      JFileChooser jfc= new JFileChooser();
-      int op=jfc.showSaveDialog(this);
-      jfc.setName(seleccionado.getNombre()+"txt");
-      if(op==JFileChooser.APPROVE_OPTION){
-          seleccionado.setArchivo(jfc.getSelectedFile());
-          try {
-              seleccionado.escribirArchivo();
-          } catch (IOException ex) {
-              Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-          }
-      }
+        JFileChooser jfc = new JFileChooser();
+        int op = jfc.showSaveDialog(this);
+        jfc.setName(seleccionado.getNombre() + ".txt");
+        if (op == JFileChooser.APPROVE_OPTION) {
+            seleccionado.setArchivo(jfc.getSelectedFile());
+            try {
+                seleccionado.escribirArchivo();
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        JFileChooser jfc = new JFileChooser();
+        File fichero = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        int op = jfc.showOpenDialog(this);
+        if (op == JFileChooser.APPROVE_OPTION) {
+            fichero = jfc.getSelectedFile();
+            try {
+                fr = new FileReader(fichero);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            br = new BufferedReader(fr);
+            String linea;
+            try {
+                while ((linea = br.readLine()) != null) {
+                    ta_archivo.append(linea);
+                    ta_archivo.append("\n");
+                }
+                JOptionPane.showMessageDialog(this, "universo cargado correctamente");
+                jMenuItem2.setEnabled(false);
+                jMenuItem3.setEnabled(false);
+                jMenuItem4.setEnabled(true);
+                jMenuItem1.setEnabled(false);
+                jMenuItem6.setEnabled(false);
+                jMenuItem7.setEnabled(true);
+                jMenu2.setEnabled(false);
+                
+
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        abrirarchivo.pack();
+        abrirarchivo.setModal(true);
+        abrirarchivo.setLocationRelativeTo(this);
+        abrirarchivo.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,6 +461,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog abrirarchivo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -385,7 +479,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_eliminar;
     private javax.swing.JButton jb_modificar;
     private javax.swing.JDialog jd_seres;
@@ -393,6 +490,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JList<String> jl_seres;
     private javax.swing.JSpinner sp_edad;
     private javax.swing.JSpinner sp_ki;
+    private javax.swing.JTextArea ta_archivo;
     private javax.swing.JTextField tf_planeta;
     private javax.swing.JTextField tf_raza;
     // End of variables declaration//GEN-END:variables

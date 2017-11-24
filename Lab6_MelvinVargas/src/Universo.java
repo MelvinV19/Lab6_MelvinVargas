@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Universo {
@@ -63,6 +64,21 @@ public class Universo {
         }
         bw.close();
         fw.close();
+    }
+    public void cargarArchivo() {
+        Scanner sc = null;
+        if (archivo.exists()) {
+            try {
+                sc = new Scanner(archivo);
+                sc.useDelimiter("|");
+                while (sc.hasNext()) {
+                    seres.add(new Ser(sc.next(), sc.nextInt(), sc.nextInt(),sc.next()));
+                }
+            } catch (Exception ex) {
+
+            }
+            sc.close();
+        }
     }
 
     @Override
