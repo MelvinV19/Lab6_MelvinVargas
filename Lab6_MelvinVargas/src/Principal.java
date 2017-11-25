@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -364,7 +366,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1.setEnabled(true);
         jMenuItem6.setEnabled(true);
         jMenuItem7.setEnabled(false);
-       
+
         JOptionPane.showMessageDialog(this, "Ha salido del universo correctamente");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -384,6 +386,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         JFileChooser jfc = new JFileChooser();
+        jl_seres.removeAll();
+        ta_archivo.removeAll();
         File fichero = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -391,33 +395,51 @@ public class Principal extends javax.swing.JFrame {
         if (op == JFileChooser.APPROVE_OPTION) {
             fichero = jfc.getSelectedFile();
             try {
+                Scanner sc = new Scanner(fichero);
+                Scanner sc2;
+                sc.useDelimiter("\n");
+                seleccionado=new Universo(fichero.getName());
+                
+                while (sc.hasNext()) {
+                    sc2=new Scanner(sc.next());
+                    sc2.useDelimiter("\\|");
+                    Ser temporal=new Ser(sc2.next(), sc2.nextInt(), sc2.nextInt(), sc2.next());
+                    seleccionado.seres.add(temporal);
+                    ta_archivo.append(temporal.toString());
+                    ta_archivo.append("\n");
+                    sc2.close();
+                    
+                }
+                sc.close();
+                actualizarList();
+                JOptionPane.showMessageDialog(this, "universo cargado correctamente");
+                jMenuItem2.setEnabled(true);
+                jMenuItem3.setEnabled(true);
+                jMenuItem4.setEnabled(true);
+                jMenuItem1.setEnabled(false);
+                jMenuItem6.setEnabled(false);
+                jMenuItem7.setEnabled(true);
+                jMenu2.setEnabled(true);
+
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
                 fr = new FileReader(fichero);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
             br = new BufferedReader(fr);
             String linea;
-            try {
-                while ((linea = br.readLine()) != null) {
-                    ta_archivo.append(linea);
-                    ta_archivo.append("\n");
-                }
-                JOptionPane.showMessageDialog(this, "universo cargado correctamente");
-                jMenuItem2.setEnabled(false);
-                jMenuItem3.setEnabled(false);
-                jMenuItem4.setEnabled(true);
-                jMenuItem1.setEnabled(false);
-                jMenuItem6.setEnabled(false);
-                jMenuItem7.setEnabled(true);
-                jMenu2.setEnabled(false);
-                
-
-            } catch (IOException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
-
+    public void actualizarList(){
+        DefaultListModel modelo=(DefaultListModel)jl_seres.getModel();
+        for (Ser s : seleccionado.getSeres()) {
+            modelo.addElement(s);
+        }
+    }
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         abrirarchivo.pack();
         abrirarchivo.setModal(true);

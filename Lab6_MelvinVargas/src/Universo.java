@@ -43,7 +43,6 @@ public class Universo {
     public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
-    
     public void escribirArchivo() throws IOException {
         FileWriter fw = null;
         BufferedWriter bw = null;
@@ -55,6 +54,7 @@ public class Universo {
                 bw.write(s.getKi()+ "|");
                 bw.write(s.getAnios()+ "|");
                 bw.write(s.getPlaneta() + "|");
+                bw.write("\n");
             }
             
             bw.flush();
@@ -65,6 +65,7 @@ public class Universo {
         bw.close();
         fw.close();
     }
+        
     public void cargarArchivo() {
         Scanner sc = null;
         if (archivo.exists()) {
